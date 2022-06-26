@@ -216,7 +216,11 @@ export default function Home({ allPostsData }) {
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
-  return {
+  const data = await fetch("https://jsonplaceholder.typicode.com/posts")
+    .then((response) => response.json())
+    .then((json) => console.log(json));
+
+  https: return {
     props: {
       allPostsData,
     },
