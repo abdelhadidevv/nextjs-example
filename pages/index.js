@@ -2,9 +2,9 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
+import { getSortedPostsData, getSortedPostsDataAPI } from "../lib/posts";
 
-export default function Home({ allPostsData, data }) {
+export default function Home({ allPostsData, postsData }) {
   return (
     <Layout home>
       <div className="container">
@@ -207,9 +207,13 @@ export default function Home({ allPostsData, data }) {
                 {date}
               </li>
             ))}
-            {data.map((item) => (
-              <li className={utilStyles.listItem} key={Math.random()}>
-                {item}
+            {postsData.map(({ body, title, id }) => (
+              <li className={utilStyles.listItem} key={id}>
+                {title}
+                <br />
+                {id}
+                <br />
+                {body}
               </li>
             ))}
           </ul>
@@ -220,13 +224,12 @@ export default function Home({ allPostsData, data }) {
 }
 
 export async function getStaticProps() {
-  const {allPostsData,data} = getSortedPostsData();
-   
-
+  const allPostsData = getSortedPostsData();
+  const postsData = await getSortedPostsDataAPI();
   https: return {
     props: {
       allPostsData,
-      data,
+      postsData,
     },
   };
 }
