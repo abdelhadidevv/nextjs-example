@@ -4,7 +4,7 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 
-export default function Home({ allPostsData }) {
+export default function Home({ allPostsData, data }) {
   return (
     <Layout home>
       <div className="container">
@@ -207,6 +207,11 @@ export default function Home({ allPostsData }) {
                 {date}
               </li>
             ))}
+            {data.map((item) => (
+              <li className={utilStyles.listItem} key={Math.random()}>
+                {item}
+              </li>
+            ))}
           </ul>
         </section>
       </div>
@@ -223,6 +228,7 @@ export async function getStaticProps() {
   https: return {
     props: {
       allPostsData,
+      data,
     },
   };
 }
